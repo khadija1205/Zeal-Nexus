@@ -33,6 +33,7 @@ import {Attendance} from './components/attendance'
 import { Tsidebar } from './components/tsidebar';
 import {HandleClick} from './components/tsidebar'
 import NoteState from './context/noteState'
+import { AdminFeedback } from './components/adminFeedback';
 
 function App() {
   const [have,sethave]=useState(0)
@@ -99,6 +100,7 @@ if(admintoken){
       <Route exact path="/adminattendance" element={<Adminattendance/>}/>
       <Route exact path="/admincomplains" element={<Admincomplains/>}/>
       <Route exact path="/adminpasses" element={<Adminpasses/>}/>
+      <Route exact path="/adminfeedback" element={<AdminFeedback/>}/>
     </Routes>
       </div>
           </div>

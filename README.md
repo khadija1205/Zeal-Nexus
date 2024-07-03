@@ -1,6 +1,6 @@
 # Modern Hostel Management System
 
-The Modern Hostel Management System is a comprehensive application designed to facilitate the management and operations of a hostel. It offers various features such as registration/sign-in, room booking, QR-based gate pass token, attendance with face and location verification, complaint section, feedback section, and an admin dashboard.
+The Modern Hostel Management System is a comprehensive application designed to facilitate the management and operations of a hostel. It offers various features such as registration/sign-in, room booking, QR-based gate pass token, attendance with location verification, complaint section, feedback section, and an admin dashboard.
 
 ## 
 
@@ -21,10 +21,6 @@ The Modern Hostel Management System is a comprehensive application designed to f
 
 ![Room_book](./src/GithubImages/git3.png)
 
-### Mess Bills
-- Students can view their mess bill details, including their current balance, the bill for the current month, and previous expenses.
-
-![Mess](./src/GithubImages/mess1.png)
 
 ### QR-Based Gate Pass Token
 - Students have to fill leave form and can download their gate pass .
@@ -33,10 +29,10 @@ The Modern Hostel Management System is a comprehensive application designed to f
 ![Gate_Pass](./src/GithubImages/git4.png)
 
 
-### Attendance with Face and Location Verification
-- Students' attendance will be marked after face and location verification.
+### Attendance with Location Verification
+- Students' attendance will be marked after location verification.
 - The system checks if the student is not on leave before verifying the location.
-- Students need to scan their face for attendance verification.
+
 
 ![Attendance](./src/GithubImages/git5.png)
 
@@ -61,10 +57,6 @@ The Modern Hostel Management System is a comprehensive application designed to f
 
 ## Installation
 
-1. Clone the repository:
-
-```bash
-git clone https://github.com/paramsgit/Hostel_minor_project.git
 ```
 2. Install the necessary dependencies:
 ```bash
@@ -90,18 +82,7 @@ node index.js
 ```
 Access the application via http://localhost:5000.
 
-Now setup python server for Face recognition.
 
-1. Install the necessary dependencies:
-```bash
-cd ..
-cd Python
-pip install -r requirements.txt
-```
-2. Start the microservice
-```bash
-python python.py
-```
 
 # Configuration
 You need to set your MongoDB URL in the `db.js` file located in the Backend folder.
@@ -117,14 +98,4 @@ e.g. -> const mongouri ="mongodb://127.0.0.1:27017/app"
 `ExpressJS`,
 `MongoDB`,
 `ReactJS`,
-`Python`,
 `Tailwind`,
-
-# Contributing
-Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
-
-- Fork the repository.
-- Create a new branch for your feature/bug fix.
-- Make your changes and commit them with descriptive commit messages.
-- Push your changes to your forked repository.
-- Submit a pull request detailing your changes.

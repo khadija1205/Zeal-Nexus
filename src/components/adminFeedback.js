@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import noteContext from '../context/noteContext';
-import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded';
 
-export const Admincomplains = () => {
+export const AdminFeedback = () => {
   let bodykadata=[]
   const navigate = useNavigate();
   const { state, dispatch } = useContext(noteContext);
@@ -35,7 +34,7 @@ export const Admincomplains = () => {
    }
 
   const getalldata=async (e)=>{
-    const response=await fetch(`http://${state.backend}:${state.port}/api/ad/allcomplains`,{
+    const response=await fetch(`http://${state.backend}:${state.port}/api/ad/allfeedback`,{
         method:'get',
         headers:{
             'Content-Type':'application/json',
@@ -47,35 +46,17 @@ export const Admincomplains = () => {
     let elly=document.getElementById('tbody')
     if(json.response){
     console.log(json)
-    for(let i=0;i<parseInt(json.allcomps.length);i++){
-  
-      let room_no=json.allcomps[i].room_no
-      let sname=json.allcomps[i].name
-      let catagory=json.allcomps[i].catagory
-      let status=json.allcomps[i].status
-      let description=json.allcomps[i].description
+    for(let i=0;i<parseInt(json.allfeedback.length);i++){
+      let title=json.allfeedback[i].title
+      let message=json.allfeedback[i].message
          
       bodykadata.push(<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-      <th scope="row" className="px-16 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-          {room_no}
+      <th scope="row" className="px-48 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          {title}
       </th>
-      <td className="px-16 py-4">
-         {sname}
+      <td className="px-48 py-4">
+         {message}
       </td>
-      {/* <td className="px-6 py-4">
-      something
-      </td> */}
-      <td className="px-16 py-4">
-      {catagory}
-      </td>
-      <td className="px-16 py-4 text-red-600">
-      {status}
-      </td>
-     
-      <td className="px-16 py-4 ">
-        {description}
-      </td>
-     
   </tr>)
   
     }
@@ -98,9 +79,8 @@ export const Admincomplains = () => {
   
   <div className="relative sm:rounded-lg">
       <div className='reloadhistorydiv'>
-  <p className="p-2 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-             Complains
-             
+  <p className="w-full p-2 text-lg font-semibold text-gray-900 bg-white dark:text-white dark:bg-gray-800 text-center">
+             Feedback
           </p>
           <div className="sbTnsdiv">
            
@@ -123,22 +103,12 @@ export const Admincomplains = () => {
       
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                  <th scope="col" className="px-16 py-3">
-                     Room number
+                  <th scope="col" className="px-48 py-3">
+                     Title
                   </th>
-                  <th scope="col" className="px-16 py-3">
-                      Student's name
+                  <th scope="col" className="px-48 py-3">
+                      Message
                   </th>
-                  <th scope="col" className="px-16 py-3">
-                      Category
-                  </th>
-                  <th scope="col" className="px-16 py-3">
-                      Status
-                  </th>
-                  <th scope="col" className="px-16 py-3">
-                      Description
-                  </th>
-                  
               </tr>
           </thead>
           <tbody id='tbody' >

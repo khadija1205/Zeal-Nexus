@@ -8,6 +8,10 @@ import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
 
 export const Adminhome = () => {
     const { state, dispatch } = useContext(noteContext);
+    const [roomsLeft, setRoomsLeft] = useState(0);
+    const [attendanceLeft, setAttendanceLeft] = useState(0);
+    const [passToday, setPassToday] = useState(0);
+    const [complainsLeft, setComplainsLeft] = useState(0);
 
 
   const navigate = useNavigate();
@@ -16,6 +20,7 @@ export const Adminhome = () => {
   if(localStorage.getItem('admintoken')){
     dothis()
     getalldata()
+    getAnalytics()
 }else{
     dothis()
     navigate("/adminsignin")
@@ -30,6 +35,22 @@ dispatch({ type: 'UPDATE_AVALUE', payload: true });
  let bodykadata=[]
  const [submitresponse,setsubmitresponse]=useState("")
  const [newds,setnewds]=useState()
+
+ const getAnalytics = async (e) => {
+    const response=await fetch(`http://${state.backend}:${state.port}/api/ad/allanalytics`,{
+        method:'get',
+        headers:{
+            'Content-Type':'application/json',
+            'auth-token':localStorage.getItem('admintoken')
+        },
+        
+    });
+    let json=await response.json();
+    setRoomsLeft(json.rooms);
+    setComplainsLeft(json.allcomps);
+    setAttendanceLeft(json.attendance);
+    setPassToday(json.allpasses);
+ }
 
 
  const getalldata=async (e)=>{
@@ -50,29 +71,33 @@ dispatch({ type: 'UPDATE_AVALUE', payload: true });
     let room_no=json.data[i].room_no
     let sname=json.data[i].name
     let semail=json.data[i].email
+    let sphone=json.data[i].mobile
+    let spercent=json.data[i].percent
     let dessignal=true
+
+    console.log('json.data[i]', json.data[i]);
   
  
    
     bodykadata.push(<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+    <th scope="row" className="px-16 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         {room_no}
     </th>
-    <td className="px-6 py-4">
+    <td className="px-16 py-4">
        {sname}
     </td>
-    <td className="px-6 py-4">
+    {/* <td className="px-6 py-4">
     something
+    </td> */}
+    <td className="px-16 py-4">
+    {spercent}%
     </td>
-    <td className="px-6 py-4">
-    else
-    </td>
-    <td className="px-6 py-4">
-    Here
+    <td className="px-16 py-4">
+    {sphone}
     </td>
    
-    <td className="px-6 py-4 ">
-       <button className='pview' onClick={() => window.location = `mailto:${semail}`}>View</button>
+    <td className="px-16 py-4 ">
+       <button className='pview' onClick={() => window.location = `mailto:${semail}`}>Email</button>
     </td>
    
 </tr>)
@@ -98,6 +123,7 @@ dispatch({ type: 'UPDATE_AVALUE', payload: true });
   elly.style.transform = `rotate(${rott}deg)`;
   rott=rott+360
   const tempv= await getalldata();
+  await getAnalytics();
  }
   return (
    <>
@@ -114,7 +140,7 @@ dispatch({ type: 'UPDATE_AVALUE', payload: true });
 <div>
 <p className="mb-0 font-sans font-semibold leading-normal text-sm" style={{color:" #67748e",display: "flex"}}>Rooms</p>
 <h5 className="mb-0 font-bold hclass">
-200
+{roomsLeft}
 <span className="leading-normal text-sm font-weight-bolder text-lime-500 lef200">left</span>
 </h5>
 </div>
@@ -136,7 +162,7 @@ dispatch({ type: 'UPDATE_AVALUE', payload: true });
 <div>
 <p className="mb-0 font-sans font-semibold leading-normal text-sm" style={{color:" #67748e",display: "flex"}}>Attendance</p>
 <h5 className="mb-0 font-bold hclass">
-23
+{attendanceLeft}
 <span className="leading-normal text-sm font-weight-bolder text-lime-500 lef200">left</span>
 </h5>
 </div>
@@ -158,7 +184,7 @@ dispatch({ type: 'UPDATE_AVALUE', payload: true });
 <div>
 <p className="mb-0 font-sans font-semibold leading-normal text-sm" style={{color:" #67748e",display: "flex"}}>Gate-pass</p>
 <h5 className="mb-0 font-bold hclass">
-6
+{passToday}
 <span className="leading-normal text-red-600 text-sm font-weight-bolder lef200">Today</span>
 </h5>
 </div>
@@ -180,7 +206,7 @@ dispatch({ type: 'UPDATE_AVALUE', payload: true });
 <div>
 <p className="mb-0 font-sans font-semibold leading-normal text-sm" style={{color:" #67748e",display: "flex"}}>Complains</p>
 <h5 className="mb-0 font-bold hclass">
-100
+{complainsLeft}
 <span className="leading-normal text-sm font-weight-bolder text-lime-500 lef200">left</span>
 </h5>
 </div>
@@ -202,7 +228,7 @@ dispatch({ type: 'UPDATE_AVALUE', payload: true });
    <div className='relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border h100 p-4'>
  
  
- <div className="relative overflow-x-auto sm:rounded-lg" style={{maxHeight:"400px"}}>
+ <div className="relative sm:rounded-lg">
      <div className='reloadhistorydiv'>
  <p className="p-2 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
              Room Details
@@ -210,12 +236,12 @@ dispatch({ type: 'UPDATE_AVALUE', payload: true });
          </p>
          <div className="sbTnsdiv">
           
-         <button className="text-black bg-gray-100 hover:bg-gray-200  focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:focus:ring-gray-500" id='addcompid' onClick={plusclicked} data-bs-toggle="modal" data-bs-target="#addnewcompform">
+         {/* <button className="text-black bg-gray-100 hover:bg-gray-200  focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:focus:ring-gray-500" id='addcompid' onClick={plusclicked} data-bs-toggle="modal" data-bs-target="#addnewcompform">
          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-lg" viewBox="0 0 16 16">
   <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
 </svg>
  
- </button>
+ </button> */}
  <button className="text-black bg-gray-100 hover:bg-gray-200  focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:focus:ring-gray-500" id='refdiv' onClick={reloadhistory}>
          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-clockwise trotate" id='tero' viewBox="0 0 16 16">
    <path fillRule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
@@ -229,28 +255,28 @@ dispatch({ type: 'UPDATE_AVALUE', payload: true });
      
          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
              <tr>
-                 <th scope="col" className="px-6 py-3">
+                 <th scope="col" className="px-16 py-3">
                     Room number
                  </th>
-                 <th scope="col" className="px-6 py-3">
+                 <th scope="col" className="px-16 py-3">
                      Student's name
                  </th>
-                 <th scope="col" className="px-6 py-3">
+                 {/* <th scope="col" className="px-6 py-3">
                      Description
-                 </th>
-                 <th scope="col" className="px-6 py-3">
+                 </th> */}
+                 <th scope="col" className="px-16 py-3">
                      Attendance
                  </th>
-                 <th scope="col" className="px-6 py-3">
+                 <th scope="col" className="px-16 py-3">
                      Phone
                  </th>
-                 <th scope="col" className="px-6 py-3">
+                 <th scope="col" className="px-16 py-3">
                      Mail
                  </th>
                  
              </tr>
          </thead>
-         <tbody id='tbody'>
+         <tbody id='tbody' >
          
         
              {bodykadata}

@@ -23,11 +23,21 @@ router.post('/attend', fetchuser, attendance_upload.single("file"),async (req,re
     // again middle ware to check like attend will be elegible between the fix time
     // 7 to 8 pm
     
-    const polygon = [
-        {lat: 31.400734, lng: 75.535784},
-        {lat: 31.398088, lng: 75.530261},
-        {lat: 31.390992, lng: 75.536039},
-        {lat: 31.393762, lng: 75.540772}
+    // HOME
+    // const polygon = [
+    //     {lat: 18.479322139157907, lng: 73.90135969005116},
+    //     {lat: 18.479322139157907, lng: 73.90335969005116},
+    //     {lat: 18.477322139157907, lng: 73.90335969005116},
+    //     {lat: 18.477322139157907, lng: 73.90135969005116},
+    //   ];
+
+
+      // ZEAL
+      const polygon = [
+        {lat: 18.45000565732574, lng: 73.8251386999256},
+        {lat: 18.45000565732574, lng: 73.8271386999256},
+        {lat: 18.44800565732574, lng: 73.8271386999256},
+        {lat: 18.44800565732574, lng: 73.8251386999256},
       ];
      
       function isPointInsidePolygon(point, polygon) {
@@ -52,13 +62,13 @@ router.post('/attend', fetchuser, attendance_upload.single("file"),async (req,re
       point.lng=req.body.longitude
       console.log(point.lat,point.lng)
       const isInside = isPointInsidePolygon(point, polygon);
+      const rfile=req.file.filename
       console.log("location is ",isInside);
       if(!isInside){
-        console.log("location outside campus")
+        return res.json({result:"undefined",message:"Attendance cannot be marked outside of campus",rfile:rfile,response:false})
       }
     //   return res.json({message:"It looks like your location is currently outside the campus.",response:false})
     //   else{
-      const rfile=req.file.filename
       const today = new Date();
       const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
       const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
@@ -72,72 +82,81 @@ router.post('/attend', fetchuser, attendance_upload.single("file"),async (req,re
       if(Attendance.length==0){
 
     try {
+          const usera = await User.findById(req.user)
+          const room = await Room.find({ user: req.user })
+        //   const newattend= new Attend({
+        //     user:req.user,name:usera.name,room_no:room[0].room_no,location:`${point.lat}${point.lng}`,status:"Present"
+        // })
+        // const new_complain = await newattend.save()
         // console.log('before room find')
-        const room = await Room.find({ user: req.user })
-        const usera = await User.findById(req.user)
+        // const room = await Room.find({ user: req.user })
+        // const usera = await User.findById(req.user)
     
-        let temp_photourl=`http://localhost:5000/api/a/newupload/${rfile}`
-        let user_photourl=`http://localhost:5000/api/a/newupload/${usera.photo_url}`
+        // let temp_photourl=`http://localhost:5000/api/a/newupload/${rfile}`
+        // let user_photourl=`http://localhost:5000/api/a/newupload/${usera.photo_url}`
         
         
-        let fresult=false,fmessage="",spoof=1
-        const options = {
-            url: 'http://127.0.0.1:8085/check',
-            method: 'get',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json;charset=UTF-8'
-            },
-            data: {
-                url1: temp_photourl,
-                url2: user_photourl
-            }
-          };
-          try {
-            await axios(options)
-          .then(response => {
-            fresult=response.data.result
-            fmessage=response.data.message
+        // let fresult=false,fmessage="",spoof=1
+        // const options = {
+        //     url: 'http://127.0.0.1:8085/check',
+        //     method: 'get',
+        //     headers: {
+        //       'Accept': 'application/json',
+        //       'Content-Type': 'application/json;charset=UTF-8'
+        //     },
+        //     data: {
+        //         url1: temp_photourl,
+        //         url2: user_photourl
+        //     }
+        //   };
+//           try {
+//             await axios(options)
+//           .then(response => {
+//             fresult=response.data.result
+//             fmessage=response.data.message
             
-            if( response.data.spoof==0){
-              fmessage="[Image seems to Fake Face, Try Again ]"
-            }else if(fresult){
-// need to change
-              const markattend = async()=>{
-                try {
-                  const usera = await User.findById(req.user)
-                  const room = await Room.find({ user: req.user })
-                  const newattend= new Attend({
-                    user:req.user,name:usera.name,room_no:room[0].room_no,location:`${point.lat}${point.lng}`,status:"Present"
-                })
-                const new_complain = await newattend.save()
+//             if( response.data.spoof==0){
+//               fmessage="[Image seems to Fake Face, Try Again ]"
+//             }else if(fresult){
+// // need to change
+//               const markattend = async()=>{
+//                 try {
+//                   const usera = await User.findById(req.user)
+//                   const room = await Room.find({ user: req.user })
+//                   const newattend= new Attend({
+//                     user:req.user,name:usera.name,room_no:room[0].room_no,location:`${point.lat}${point.lng}`,status:"Present"
+//                 })
+//                 const new_complain = await newattend.save()
             
                   
-              } catch (error) {
-                console.log(error)
-                  res.status(500).json({ message:'server error',response:false})
-              }
-              }
-              markattend()
+//               } catch (error) {
+//                 console.log(error)
+//                   res.status(500).json({ message:'server error',response:false})
+//               }
+//               }
+//               markattend()
               
-            }
-            console.log(response.data.result);
-          });
+//             }
+//             console.log(response.data.result);
+//           });
           
 
         
 
-          res.json({result:fresult,message:fmessage,rfile:rfile,response:true})
-          } catch (error) {
-            res.send(error)
-          }
+//           res.json({result:fresult,message:fmessage,rfile:rfile,response:true})
+//           } catch (error) {
+//             res.send(error)
+//           }
 
 
         // const attend = new Attend({
         //     status:'ok', user:req.user,name:usera.name,room_no:room[0].room_no
         // })
-        // const mark_attend = await attend.save()
-        // res.json(mark_attend)
+        const attend= new Attend({
+            user:req.user,name:usera.name,room_no:room[0].room_no,location:`${point.lat}${point.lng}`,status:"Present"
+        })
+        const mark_attend = await attend.save()
+        res.json({...mark_attend, message: 'Attendance Recorded'})
     } catch (error) {
         console.log(error)
         res.status(500).json({ message:'server error'})
@@ -147,17 +166,17 @@ router.post('/attend', fetchuser, attendance_upload.single("file"),async (req,re
     res.json({result:"undefined",message:"Already Present",rfile:rfile,response:false})
   }
     //   delete temp photo
-    const file = await gfs.files.findOne({ filename:rfile});
-    await gfs.db.collection('photos' + '.chunks').deleteOne({files_id:file._id}, function(err) {
-      if(err){
-          return res.status(400).json(err)
-      }
-   })
-  await gfs.files.deleteOne({_id:file._id},(err,result)=>{
-      if(err){
-          return res.status(400).json(err)
-      }
-  })
+  //   const file = await gfs.files.findOne({ filename:rfile});
+  //   await gfs.db.collection('photos' + '.chunks').deleteOne({files_id:file._id}, function(err) {
+  //     if(err){
+  //         return res.status(400).json(err)
+  //     }
+  //  })
+  // await gfs.files.deleteOne({_id:file._id},(err,result)=>{
+  //     if(err){
+  //         return res.status(400).json(err)
+  //     }
+  // })
 
 })
 // router 2 : to get attendance history

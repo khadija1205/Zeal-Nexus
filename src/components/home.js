@@ -60,7 +60,7 @@ let json=await response.json();
 console.log(json,json.userkaname)
 setsname(json.userkaname)
 if(json.response){
-  
+
 dispatch({ type: 'UPDATE_NAME', payload: json.user.name });
 localStorage.setItem('room_no',json.room_no)
 dispatch({ type: 'UPDATE_EMAIL', payload: json.user.email });
@@ -101,7 +101,6 @@ for(let i=0;i<json.length;i++){
 
   const handle=async (e)=>{
    
-    let roomno={sroom}
     e.preventDefault();
     const response=await fetch(`http://${state.backend}:${state.port}/api/b/bookroom`,{
         method:'POST',
@@ -109,7 +108,7 @@ for(let i=0;i<json.length;i++){
             'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
         },
-        body: JSON.stringify({room:roomno})
+        body: JSON.stringify({room:sroom})
 
 
     });
@@ -161,9 +160,9 @@ for(let i=0;i<json.length;i++){
 <div className="max-w-full px-3 lg:w-1/2 lg:flex-none">
 <div className="flex flex-col h-full">
 <p className="pt-2 mb-1 font-semibold">Welcome to</p>
-<h5 className="font-bold">Mega Boys Hostels</h5>
+<h5 className="font-bold">Zeal Girls Hostels</h5>
 <p className="mb-12">The hostel facility is available to the regular students who are on the rolls of the institute depending upon the availability.</p>
-<a className="mt-auto mb-0 font-semibold leading-normal text-sm group text-slate-500" target={'_blank'} href="https://www.nitj.ac.in/index.php/nitj_cinfo/index/23">
+<a className="mt-auto mb-0 font-semibold leading-normal text-sm group text-slate-500" target={'_blank'} href="https://zcoer.in/girls-hostel/">
 Read More
 <i className="fas fa-arrow-right ease-bounce text-sm group-hover:translate-x-1.25 ml-1 leading-normal transition-all duration-200" aria-hidden="true"></i>
 </a>
@@ -363,7 +362,7 @@ Read More
 <div className="relative h-full overflow-hidden bg-cover rounded-xl thisisbgcv">
 <span className="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-gray-900 to-slate-800 opacity-80 "></span>
 <div className="relative z-10 flex flex-col flex-auto h-full p-4">
-<h5 className="pt-2 mb-6 font-bold text-white">Mega Boys Hostels</h5>
+<h5 className="pt-2 mb-6 font-bold text-white">Zeal Girls Hostels</h5>
 <p className="txtw ">You have selected room number {sroom}</p>
 <div>
 <div className='d-flex rdetails'>
@@ -384,7 +383,7 @@ Hello!
     <input type="password" className="form-control" id="password" hidden value={sroom}/>
   
  
-    <a className="mt-auto mb-0 font-semibold leading-normal text-white group text-sm" href="#" onClick={handle}>
+    <a className="mt-auto mb-0 font-semibold leading-normal text-white group text-sm" onClick={handle}>
 Next
 <i className="fas fa-arrow-right ease-bounce text-sm group-hover:translate-x-1.25 ml-1 leading-normal transition-all duration-200" aria-hidden="true"></i>
 </a>
@@ -399,8 +398,8 @@ Next
    </div>
    
  <div className="one third">
-<div className="flex flex-wrap mt-6 -mx-3 thirdbloon">
-<div className=" px-3 mt-0 mb-6 lg:mb-0 lg:flex-none panjwta">
+<div className="flex flex-wrap mt-6 -mx-3 thirdbloon justify-center">
+{/* <div className=" px-3 mt-0 mb-6 lg:mb-0 lg:flex-none panjwta">
 <div className="border-black/12.5 shadow-soft-xl relative z-20 flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
 <div className="flex-auto p-4">
 <div className="py-4 pr-1 mb-4 bg-gradient-to-tl rounded-xl ">
@@ -474,7 +473,7 @@ Next
 </div>
 </div>
 </div>
-</div>
+</div> */}
 <div className="w-full max-w-full px-3 mt-0 lg:flex-none chewta">
 <div className="border-black/12.5 shadow-soft-xl relative z-20 flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border bdrbl">
 <div className="border-black/12.5 mb-0 rounded-t-2xl border-b-0 border-solid bg-white p-6 pb-0">
