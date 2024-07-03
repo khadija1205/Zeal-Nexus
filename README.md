@@ -4,7 +4,7 @@ The Modern Hostel Management System is a comprehensive application designed to f
 
 ## 
 
-![Dashboard](./src/GithubImages/git1.png)
+![Dashboard](./src/GithubImages/Homepage.png)
 
 #
 
@@ -14,19 +14,19 @@ The Modern Hostel Management System is a comprehensive application designed to f
 - Students can register and create an account to access the system.
 - Existing students can sign in using their credentials.
 
-![Signinup](./src/GithubImages/git2.png)
+![Signinup](./src/GithubImages/signinPage.png)
 
 ### Room Booking
 - Students can view available rooms and book them based on their preferences and availability.
 
-![Room_book](./src/GithubImages/git3.png)
+![Room_book](./src/GithubImages/profile.png)
 
 
 ### QR-Based Gate Pass Token
 - Students have to fill leave form and can download their gate pass .
 - The gate pass token will be scanned by security personnel at the gate for verification.
 
-![Gate_Pass](./src/GithubImages/git4.png)
+![Gate_Pass](./src/GithubImages/gatepass.png)
 
 
 ### Attendance with Location Verification
@@ -36,7 +36,6 @@ The Modern Hostel Management System is a comprehensive application designed to f
 
 ![Attendance](./src/GithubImages/git5.png)
 
-![Attendance](./src/GithubImages/att.png)
 
 ### Complaint Section
 - Students can submit complaints or issues they encounter within the hostel.
