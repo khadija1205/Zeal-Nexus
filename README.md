@@ -1,6 +1,6 @@
-# Modern Hostel Management System
+# Zeal Nexus:Student Abode
 
-The Modern Hostel Management System is a comprehensive application designed to facilitate the management and operations of a hostel. It offers various features such as registration/sign-in, room booking, QR-based gate pass token, attendance with location verification, complaint section, feedback section, and an admin dashboard.
+Zeal Nexus:Student Abodeis a smart, scalable web platform built to simplify hostel operations through digital automation. From seamless room booking and real-time gate pass verification to complaint tracking and admin analytics — this system offers everything needed to run a modern hostel smoothly.
 
 ## 
 
