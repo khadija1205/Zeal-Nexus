@@ -1,6 +1,8 @@
 # Zeal Nexus:Student Abode
 
-Zeal Nexus:Student Abodeis a smart, scalable web platform built to simplify hostel operations through digital automation. From seamless room booking and real-time gate pass verification to complaint tracking and admin analytics — this system offers everything needed to run a modern hostel smoothly.
+Zeal Nexus:Student Abode is a smart, scalable full-stack web platform designed to automate and streamline student housing operations. It features a modular architecture that supports real-time room booking, dynamic gate pass verification, complaint resolution tracking, and admin dashboards with actionable analytics.
+
+Built with the MERN stack, the platform ensures role-based access control, mobile responsiveness, and secure authentication—delivering a seamless experience for students and administrators alike.
 
 ## 
 
